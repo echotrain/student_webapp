@@ -1,0 +1,214 @@
+/* == studentData CSS directory ==
+==================================
+1.) General 
+    > affects all elements
+----------------------------------
+2.) Table View
+    > elements specific to
+        the table view
+----------------------------------
+3.) Tile View
+    > elements specific to 
+        the tile view
+----------------------------------
+4.) Modals View
+    > elements specific to
+        the modals
+==================================
+*/
+
+
+/*========================== 1. General ==========================*/
+body {
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: #818181;
+}
+
+p {
+    margin: 0px;
+}
+
+.jumbotron {
+    background-color: #2d2d30;
+    color: #fff;
+    font-family: Montserrat, sans-serif;
+}
+
+.btn-nav {
+    background-color: #2d2d30;
+    color: #1abc9c;
+    border-color: #1abc9c;
+    border-width: 2px;
+    margin-top: 3px;
+}
+
+.btn-nav:hover {
+    background-color: #1abc9c;
+    color: #2d2d30;
+}
+
+.btn-alt {
+    background-color: #e0e0e0;
+    color: #818181;
+    margin-bottom: 10px;
+}
+
+.btn-alt.active, .btn-alt:hover:active {
+    background-color: #818181;
+    color: #fff;
+    cursor: default;
+}
+
+.logo {
+    font-size: 150px;
+    color: #1abc9c;
+}
+
+#restoreStudent {
+    display: none;
+}
+
+.navbarIcon {
+    font-size: 25px;
+    color: #f4511e;
+    margin-top: -2px;
+}
+
+.navbar-nav > li:hover, .navbar-nav > li > a:hover {
+    background-color: #3e3e42;
+    cursor: pointer;
+    color: #1abc9c !important;
+}
+
+.navbar-brand {
+    cursor: default;
+}
+
+.footerIcon {
+    font-size: 50px;
+    color: #1abc9c;
+    margin: .45em;
+}
+
+/*========================= 2. Table View ========================*/
+table {
+    background-color: #fff;
+}
+
+.thead-color, .navbarAlt, .footerAlt {
+    background-color: #2d2d30;
+    color: #fff;
+}
+
+.sortTable, .clickRow {
+    cursor: pointer;
+}
+
+.iconHide {
+    color: #2d2d30 !important;
+}
+
+#columnTitle {
+    float: right;
+    margin-top: 3px;
+}
+
+.editItem {
+    cursor: pointer;
+}
+.editItem:hover {
+    background: #23a40c;
+    border-radius: 6px;
+}
+.editItem:hover > .editItemButton {
+    color: #fff;
+}
+
+.deleteItem {
+    cursor:pointer;
+}
+.deleteItem:hover {
+    background: #db0c00;
+    border-radius: 6px;
+}
+.deleteItem:hover > .deleteItemButton {
+    color: #fff;
+}
+.deleteItemButton {
+    color: red;
+}
+
+/*========================== 3. Tile View ========================*/
+.panel-title {
+    color: #1abc9c;
+}
+
+.customTile1 {
+    background-color: #2d2d30;
+    color: #fff;
+    border-radius: 6px;
+    border: 0px solid;
+}
+
+.customTile2 {
+    background-color: #f0f0f0;
+    color: #818181;
+}
+
+.customTile3 {
+    background-color: #6f6f76;
+    color: #fff;
+}
+
+#tile-style {
+    display: none;
+}
+
+#tileView {
+    border-radius: 0px 6px 6px 0px;
+}
+
+/*========================= 4. Modals View =======================*/
+#refreshModal, #studentModal {
+    margin-top: 10em;
+}
+
+#studentModalFrame, #tileImg {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-glyph {
+    font-size: 125px;
+    color: #95a5a6;
+    margin-top: .30em;
+    margin-bottom: .35em;
+}
+
+.glyphicon-spin {
+    -webkit-animation: spin 1000ms infinite linear;
+    animation: spin 1000ms infinite linear;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}

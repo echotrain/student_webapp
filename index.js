@@ -1,6 +1,6 @@
 //NODE.js script
 console.log('Loading Server');
-const WEB = __dirname.replace('server','web');
+const WEB = __dirname + '/web';
 const SERV = __dirname + '/server';
 console.log(`WEB is ${WEB}`);
 
@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //file list data
 console.log("Checking File System");
-var fileList = fs.readdirSync(__dirname + '/students').map(fileName => fileName.replace('.json', ''));
+var fileList = fs.readdirSync(__dirname + '/server/students').map(fileName => fileName.replace('.json', ''));
 
 
 //id creation
@@ -126,7 +126,8 @@ app.get('*', function(req, res) {
 
 
 //start server
-var server = app.listen(process.env.PORT, process.env.IP);
+let port = 3000;
+var server = app.listen(port, process.env.IP);
 
 //shutdown handling
 function gracefullShutdown() {

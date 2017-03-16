@@ -1,6 +1,8 @@
 // JavaScript Files
 /* global $ Cookies */
 
+//TODO: learn everything about angular, conversion starts now...
+
 let students = [];
 let images;
 let deletedStudents = [];

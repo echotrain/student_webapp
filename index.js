@@ -5,18 +5,18 @@ const SERV = __dirname + '/server';
 console.log(`WEB is ${WEB}`);
 
 //load main modules
-var express = require('express');
-var fs = require('fs');
+let express = require('express');
+let fs = require('fs');
 
 //load express middleware modules
-var logger = require('morgan');
-var compression = require('compression');
-var favicon = require('serve-favicon');
-var bodyParser = require('body-parser');
+let logger = require('morgan');
+let compression = require('compression');
+let favicon = require('serve-favicon');
+let bodyParser = require('body-parser');
 
 
 //create express app
-var app = express();
+let app = express();
 
 //insert middleware
 app.use(logger('dev'));
@@ -28,14 +28,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //file list data
 console.log("Checking File System");
-var fileList = fs.readdirSync(__dirname + '/server/students').map(fileName => fileName.replace('.json', ''));
+let fileList = fs.readdirSync(__dirname + '/students').map(fileName => fileName.replace('.json', ''));
 
 
 //id creation
 const ID_SIZE = 4;
 
 function idFiller(number, spaces) {
-    var id = `${number}`;
+    let id = `${number}`;
     while (id.length < spaces) {
         id = '0' + id;
     }
@@ -43,22 +43,22 @@ function idFiller(number, spaces) {
 }
 
 function* generateID() {
-    var startID = Math.max.apply(null, fileList.map(fileName => parseInt(fileName)));
+    let startID = Math.max.apply(null, fileList.map(fileName => parseInt(fileName)));
     startID++;
     while (true) {
-        var newID = idFiller(startID++, ID_SIZE);
+        let newID = idFiller(startID++, ID_SIZE);
         fileList.push(newID);
         yield newID;
     }
 }
-var getID = generateID();
+let getID = generateID();
 
 
 //REST end points
 //CREATE
 app.post('/api/v1/students', function(req, res) {
-    var data = JSON.stringify(req.body, null, '\t');
-    var id = getID.next().value;
+    let data = JSON.stringify(req.body, null, '\t');
+    let id = getID.next().value;
     
     fs.writeFile(`${__dirname}/students/${id}.json`, data, 'utf8', function(err) {
         if (err) throw err;
@@ -69,7 +69,7 @@ app.post('/api/v1/students', function(req, res) {
 
 //READ
 app.get('/api/v1/students/:id.json', function(req, res) {
-    var id = req.params.id;
+    let id = req.params.id;
     fs.readFile(`${__dirname}/students/${id}.json`, 'utf8', function(err, data) {
         if (err) throw err; //TODO handle 404
         
@@ -79,8 +79,8 @@ app.get('/api/v1/students/:id.json', function(req, res) {
 
 //UPDATE
 app.put('/api/v1/students/:id.json', function(req, res) {
-    var id = req.params.id;
-    var data = JSON.stringify(req.body, null, '\t');
+    let id = req.params.id;
+    let data = JSON.stringify(req.body, null, '\t');
     fs.writeFile(`${__dirname}/students/${id}.json`, data, 'utf8', function(err) {
         if (err) throw err;
         
@@ -90,8 +90,8 @@ app.put('/api/v1/students/:id.json', function(req, res) {
 
 //DELETE
 app.delete('/api/v1/students/:id.json', function(req, res) {
-    var id = req.params.id;
-    var idIndex = fileList.indexOf(id);
+    let id = req.params.id;
+    let idIndex = fileList.indexOf(id);
     
     if (idIndex === -1) {
         res.status(404).sendFile(WEB + '/404.html');
@@ -107,7 +107,7 @@ app.delete('/api/v1/students/:id.json', function(req, res) {
 app.get('/api/v1/students.json', function(req, res) {
     fs.readdir(`${__dirname}/students`, function(err, files) {
         if (err) throw err;
-        var list = files.map(fileName => fileName.replace('.json', ''));
+        let list = files.map(fileName => fileName.replace('.json', ''));
         res.status(200).json(list);
     });
 });
@@ -127,7 +127,7 @@ app.get('*', function(req, res) {
 
 //start server
 let port = 3000;
-var server = app.listen(port, process.env.IP);
+let server = app.listen(port, process.env.IP);
 
 //shutdown handling
 function gracefullShutdown() {

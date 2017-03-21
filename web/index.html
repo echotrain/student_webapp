@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Josh Anderson | Fun with Tables</title>
     <link rel="icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" type="text/css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
     <link rel="stylesheet" href="lib/css/angular-material-1.1.3.min.css">
@@ -15,263 +16,292 @@
 </head>
 
 <body ng-controller="studentController">
-    
-<div class="container">
-    
-    <div class="jumbotron text-center">
-        <h1>Fun with Tables!</h1>
-        <span class="glyphicon glyphicon-education logo"></span>
-        <h2>Student Data</h2>
-        <br/>
-        <button type="button" class="btn btn-lg btn-nav" id="addNewStudent" data-toggle="tooltip" data-placement="bottom" title="Add New Student">
-            <span class="glyphicon glyphicon-plus"></span> Add
-        </button>
-        <button type="button" class="btn btn-lg btn-nav" id="restoreStudent" data-toggle="tooltip" data-placement="bottom" title="Restore Student">
-            <span class="glyphicon glyphicon-repeat"></span> Restore
-        </button>
-    </div>
-    
-    <!--==================== DATA VIEW ====================-->
-    <!------ button toggle to change the display style of the data ------>
-    <div class="btn-group pull-right">
-        <button type="button" class="btn btn-lg btn-alt" id="tableView" data-toggle="tooltip" data-placement="top" title="table view">
-            <span class="glyphicon glyphicon-list"></span>
-        </button>
-        <button type="button" class="btn btn-lg btn-alt" id="tileView" data-toggle="tooltip" data-placement="top" title="tile view">
-            <span class="glyphicon glyphicon-th"></span>
-        </button>
-    </div>
-    
-    <!------ table style of the student data ------>
-    <div id="table-style" class="data-view">
-        <h3 class="pull-left">Student Data Table:</h3>
-        <table class="table table-hover table-condensed table-bordered">
-            <thead class="thead-color">
-                <tr>
-                    <th id="year" class="sortTable">Year<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>
-                    <th id="lname" class="sortTable">Name<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>
-                    <th id="startDate" class="sortTable">Start Date<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>
-                    <th id="street" class="sortTable">Street<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>
-                    <th id="city" class="sortTable">City<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>
-                    <th id="state" class="sortTable">State<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>
-                    <th id="zip" class="sortTable">Zip<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>
-                    <th id="phone" class="sortTable">Phone<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>
-                    <th id="edit" class="text-center">Edit</th>
-                    <th id="delete" class="text-center">Delete</th>
-                </tr>
-            </thead>
-            <tbody id="tableData">
-                <!-- AJAXing JSON data for table view goes here -->
-            </tbody>
-        </table>
-    </div>
-    
-    <!------ tile style of the student data ------>
-    <div id="tile-style" class="data-view">
-        <h3 class="pull-left">Student Data Tiles:</h3>
-        <div id="tileData" class="row pull-left">
-            <!-- AJAXing JSON data for tile view goes here -->
-        </div>
-    </div>
-</div>
-    
-    <footer class="text-center footerAlt">
-        <span class="glyphicon glyphicon-grain footerIcon"></span>
-        <p>by Josh Anderson</p>
-    </footer>
-    
-    <!--==================== MODALS ====================-->
-    <!------------------ edit data modal ------------------>
-    <div class="modal fade" id="dataFormModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h2 class="modal-title text-center">Enter Student Information</h2>
-                </div>
-                
-                <div class="modal-body">
-                    <form id="studentForm" class="form-horizontal">
-                        <fieldset>
-                            <legend class="text-center">Student Information</legend>
-                            <!-- student first name field -->
-                            <div class="form-group">
-                                <label for="inputFirstName" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">First Name</label>
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
-                                    <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" required>
-                                </div>
-                            </div>
-                            <!-- student last name field -->
-                            <div class="form-group">
-                                <label for="inputLastName" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Last Name</label>
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
-                                    <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" required>
-                                </div>
-                            </div>
-                            <!-- student phone number field -->
-                            <div class="form-group">
-                                <label for="inputPhone" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Phone Number</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                                    <input type="text" class="form-control" id="inputPhone" placeholder="000-000-0000" required>
-                                </div>
-                            </div>
-                            <!-- student start date field -->
-                            <div class="form-group">
-                                <label for="inputStartDate" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Start Date</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                                    <input type="text" class="form-control" id="inputStartDate" placeholder="MM/DD/YY" required>
-                                </div>
-                            </div>
-                            <!-- student year field -->
-                            <div class="form-group">
-                                <label for="selectSchoolYear" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">School Year</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                                    <select type="text" class="form-control" id="selectSchoolYear" required>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <legend class="text-center">Address</legend>
-                            <!-- student street address field -->
-                            <div class="form-group">
-                                <label for="inputStreet" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Street Address</label>
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
-                                    <input type="text" class="form-control" id="inputStreet" placeholder="Street Address" required>
-                                </div>
-                            </div>
-                            <!-- student city field -->
-                            <div class="form-group">
-                                <label for="inputCity" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">City</label>
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
-                                    <input type="text" class="form-control" id="inputCity" placeholder="City" required>
-                                </div>
-                            </div>
-                            <!-- student state field -->
-                            <div class="form-group">
-                                <label for="selectState" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">State</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                                    <select class="form-control" id="selectState" name="state" required>
-                            			<option value="">N/A</option>
-                            			<option value="AK">Alaska</option>
-                            			<option value="AL">Alabama</option>
-                            			<option value="AR">Arkansas</option>
-                            			<option value="AZ">Arizona</option>
-                            			<option value="CA">California</option>
-                            			<option value="CO">Colorado</option>
-                            			<option value="CT">Connecticut</option>
-                            			<option value="DC">District of Columbia</option>
-                            			<option value="DE">Delaware</option>
-                            			<option value="FL">Florida</option>
-                            			<option value="GA">Georgia</option>
-                            			<option value="HI">Hawaii</option>
-                            			<option value="IA">Iowa</option>
-                            			<option value="ID">Idaho</option>
-                            			<option value="IL">Illinois</option>
-                            			<option value="IN">Indiana</option>
-                            			<option value="KS">Kansas</option>
-                            			<option value="KY">Kentucky</option>
-                            			<option value="LA">Louisiana</option>
-                            			<option value="MA">Massachusetts</option>
-                            			<option value="MD">Maryland</option>
-                            			<option value="ME">Maine</option>
-                            			<option value="MI">Michigan</option>
-                            			<option value="MN">Minnesota</option>
-                            			<option value="MO">Missouri</option>
-                            			<option value="MS">Mississippi</option>
-                            			<option value="MT">Montana</option>
-                            			<option value="NC">North Carolina</option>
-                            			<option value="ND">North Dakota</option>
-                            			<option value="NE">Nebraska</option>
-                            			<option value="NH">New Hampshire</option>
-                            			<option value="NJ">New Jersey</option>
-                            			<option value="NM">New Mexico</option>
-                            			<option value="NV">Nevada</option>
-                            			<option value="NY">New York</option>
-                            			<option value="OH">Ohio</option>
-                            			<option value="OK">Oklahoma</option>
-                            			<option value="OR">Oregon</option>
-                            			<option value="PA">Pennsylvania</option>
-                            			<option value="PR">Puerto Rico</option>
-                            			<option value="RI">Rhode Island</option>
-                            			<option value="SC">South Carolina</option>
-                            			<option value="SD">South Dakota</option>
-                            			<option value="TN">Tennessee</option>
-                            			<option value="TX">Texas</option>
-                            			<option value="UT">Utah</option>
-                            			<option value="VA">Virginia</option>
-                            			<option value="VT">Vermont</option>
-                            			<option value="WA">Washington</option>
-                            			<option value="WI">Wisconsin</option>
-                            			<option value="WV">West Virginia</option>
-                            			<option value="WY">Wyoming</option>
-                            		</select>
-                                </div>
-                            </div>
-                            <!-- student zip code field -->
-                            <div class="form-group">
-                                <label for="inputZip" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Zip</label>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">
-                                    <input type="text" class="form-control" id="inputZip" placeholder="Zip" required>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="pull-right" id="saveButtonDiv"></div>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!------------------ delete confirm modal ------------------>
-    <div class="modal fade" id="confirmDeleteModal" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title text-center">Confirm Delete</h2>
-                </div>
-                <div class="modal-body">
-                    <div id="studentToDelete" class="text-center">
-                        <!-- data is generated dynamically from script -->
-                    </div>
-                    <div id="deleteButtonDiv" class="text-center">
-                        <!-- data is generated dynamically from script -->
-                    </div>
-                </div>
-                <div id="cancelDeleteDiv" class="modal-footer">
-                    <button id="cancelDeleteButton" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- student modal to be popped when table row is clicked -->
-    <div class="modal fade bs-example-modal-sm" id="studentModal" role="dialog">
-        <div id="modalData" class="modal-dialog modal-sm">
-            <!-- data is generated dynamically from script -->
-        </div>
-    </div>
-    
-    <!------ modal to be popped when data is sorted ------>
-    <div class="modal fade bs-example-modal-sm" id="refreshModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content text-center">
-                <div class="modal-header">
-                    <h4 class="modal-title">Sorting Data...</h4>
-                </div>
-                <div class="modal-body">
-                    <span class="glyphicon glyphicon-refresh glyphicon-spin modal-glyph"></span>
-                </div>
-            </div>
-        </div>
-    </div>
 
-<script src="lib/js/angular-1.6.1.js"></script>
+<md-content class="container">
+    <md-card>
+        <div>
+            <h1>Fun with Tables!</h1>
+            <md-icon md-font-icon="material-icons">school</md-icon>
+            <h2>Student Data</h2>
+        </div>
+        <!-- toggle view button group -->>
+        <div>
+            <md-button class="md-icon-button"></md-button>
+            <md-button class="md-icon-button"></md-button>
+        </div>
+        <!-- add or restore student button group -->
+        <div>
+            <md-button title="Add Student">Add</md-button>
+            <md-button title="Restore Student">Restore</md-button>
+        </div>
+        <!-- TABLE VIEW -->
+        <md-list class="">
+            <md-list-item>
+
+            </md-list-item>
+        </md-list>
+
+        <!-- TILES VIEW -->
+
+    </md-card>
+</md-content>
+    
+<!--<div class="container">-->
+
+    <!--<div class="jumbotron text-center">-->
+        <!--<h1>Fun with Tables!</h1>-->
+        <!--<span class="glyphicon glyphicon-education logo"></span>-->
+        <!--<h2>Student Data</h2>-->
+        <!--<br/>-->
+        <!--<button type="button" class="btn btn-lg btn-nav" id="addNewStudent" data-toggle="tooltip" data-placement="bottom" title="Add New Student">-->
+            <!--<span class="glyphicon glyphicon-plus"></span> Add-->
+        <!--</button>-->
+        <!--<button type="button" class="btn btn-lg btn-nav" id="restoreStudent" data-toggle="tooltip" data-placement="bottom" title="Restore Student">-->
+            <!--<span class="glyphicon glyphicon-repeat"></span> Restore-->
+        <!--</button>-->
+    <!--</div>-->
+    <!---->
+    <!--&lt;!&ndash;==================== DATA VIEW ====================&ndash;&gt;-->
+    <!--&lt;!&ndash;&#45;&#45;&#45;&#45; button toggle to change the display style of the data &#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--<div class="btn-group pull-right">-->
+        <!--<button type="button" class="btn btn-lg btn-alt" id="tableView" data-toggle="tooltip" data-placement="top" title="table view">-->
+            <!--<span class="glyphicon glyphicon-list"></span>-->
+        <!--</button>-->
+        <!--<button type="button" class="btn btn-lg btn-alt" id="tileView" data-toggle="tooltip" data-placement="top" title="tile view">-->
+            <!--<span class="glyphicon glyphicon-th"></span>-->
+        <!--</button>-->
+    <!--</div>-->
+    <!---->
+    <!--&lt;!&ndash;&#45;&#45;&#45;&#45; table style of the student data &#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--<div id="table-style" class="data-view">-->
+        <!--<h3 class="pull-left">Student Data Table:</h3>-->
+        <!--<table class="table table-hover table-condensed table-bordered">-->
+            <!--<thead class="thead-color">-->
+                <!--<tr>-->
+                    <!--<th id="year" class="sortTable">Year<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>-->
+                    <!--<th id="lname" class="sortTable">Name<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>-->
+                    <!--<th id="startDate" class="sortTable">Start Date<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>-->
+                    <!--<th id="street" class="sortTable">Street<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>-->
+                    <!--<th id="city" class="sortTable">City<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>-->
+                    <!--<th id="state" class="sortTable">State<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>-->
+                    <!--<th id="zip" class="sortTable">Zip<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>-->
+                    <!--<th id="phone" class="sortTable">Phone<span class="glyphicon glyphicon-sort iconHide" id="columnTitle"></span></th>-->
+                    <!--<th id="edit" class="text-center">Edit</th>-->
+                    <!--<th id="delete" class="text-center">Delete</th>-->
+                <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody id="tableData">-->
+                <!--&lt;!&ndash; AJAXing JSON data for table view goes here &ndash;&gt;-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+    <!---->
+    <!--&lt;!&ndash;&#45;&#45;&#45;&#45; tile style of the student data &#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--<div id="tile-style" class="data-view">-->
+        <!--<h3 class="pull-left">Student Data Tiles:</h3>-->
+        <!--<div id="tileData" class="row pull-left">-->
+            <!--&lt;!&ndash; AJAXing JSON data for tile view goes here &ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+    <!---->
+    <!--<footer class="text-center footerAlt">-->
+        <!--<span class="glyphicon glyphicon-grain footerIcon"></span>-->
+        <!--<p>by Josh Anderson</p>-->
+    <!--</footer>-->
+    <!---->
+    <!--&lt;!&ndash;==================== MODALS ====================&ndash;&gt;-->
+    <!--&lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; edit data modal &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--<div class="modal fade" id="dataFormModal" role="dialog">-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+                <!---->
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                    <!--<h2 class="modal-title text-center">Enter Student Information</h2>-->
+                <!--</div>-->
+                <!---->
+                <!--<div class="modal-body">-->
+                    <!--<form id="studentForm" class="form-horizontal">-->
+                        <!--<fieldset>-->
+                            <!--<legend class="text-center">Student Information</legend>-->
+                            <!--&lt;!&ndash; student first name field &ndash;&gt;-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="inputFirstName" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">First Name</label>-->
+                                <!--<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">-->
+                                    <!--<input type="text" class="form-control" id="inputFirstName" placeholder="First Name" required>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; student last name field &ndash;&gt;-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="inputLastName" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Last Name</label>-->
+                                <!--<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">-->
+                                    <!--<input type="text" class="form-control" id="inputLastName" placeholder="Last Name" required>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; student phone number field &ndash;&gt;-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="inputPhone" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Phone Number</label>-->
+                                <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">-->
+                                    <!--<input type="text" class="form-control" id="inputPhone" placeholder="000-000-0000" required>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; student start date field &ndash;&gt;-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="inputStartDate" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Start Date</label>-->
+                                <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">-->
+                                    <!--<input type="text" class="form-control" id="inputStartDate" placeholder="MM/DD/YY" required>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; student year field &ndash;&gt;-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="selectSchoolYear" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">School Year</label>-->
+                                <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">-->
+                                    <!--<select type="text" class="form-control" id="selectSchoolYear" required>-->
+                                        <!--<option>1</option>-->
+                                        <!--<option>2</option>-->
+                                        <!--<option>3</option>-->
+                                        <!--<option>4</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!---->
+                            <!--<legend class="text-center">Address</legend>-->
+                            <!--&lt;!&ndash; student street address field &ndash;&gt;-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="inputStreet" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Street Address</label>-->
+                                <!--<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">-->
+                                    <!--<input type="text" class="form-control" id="inputStreet" placeholder="Street Address" required>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; student city field &ndash;&gt;-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="inputCity" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">City</label>-->
+                                <!--<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">-->
+                                    <!--<input type="text" class="form-control" id="inputCity" placeholder="City" required>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; student state field &ndash;&gt;-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="selectState" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">State</label>-->
+                                <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">-->
+                                    <!--<select class="form-control" id="selectState" name="state" required>-->
+                            			<!--<option value="">N/A</option>-->
+                            			<!--<option value="AK">Alaska</option>-->
+                            			<!--<option value="AL">Alabama</option>-->
+                            			<!--<option value="AR">Arkansas</option>-->
+                            			<!--<option value="AZ">Arizona</option>-->
+                            			<!--<option value="CA">California</option>-->
+                            			<!--<option value="CO">Colorado</option>-->
+                            			<!--<option value="CT">Connecticut</option>-->
+                            			<!--<option value="DC">District of Columbia</option>-->
+                            			<!--<option value="DE">Delaware</option>-->
+                            			<!--<option value="FL">Florida</option>-->
+                            			<!--<option value="GA">Georgia</option>-->
+                            			<!--<option value="HI">Hawaii</option>-->
+                            			<!--<option value="IA">Iowa</option>-->
+                            			<!--<option value="ID">Idaho</option>-->
+                            			<!--<option value="IL">Illinois</option>-->
+                            			<!--<option value="IN">Indiana</option>-->
+                            			<!--<option value="KS">Kansas</option>-->
+                            			<!--<option value="KY">Kentucky</option>-->
+                            			<!--<option value="LA">Louisiana</option>-->
+                            			<!--<option value="MA">Massachusetts</option>-->
+                            			<!--<option value="MD">Maryland</option>-->
+                            			<!--<option value="ME">Maine</option>-->
+                            			<!--<option value="MI">Michigan</option>-->
+                            			<!--<option value="MN">Minnesota</option>-->
+                            			<!--<option value="MO">Missouri</option>-->
+                            			<!--<option value="MS">Mississippi</option>-->
+                            			<!--<option value="MT">Montana</option>-->
+                            			<!--<option value="NC">North Carolina</option>-->
+                            			<!--<option value="ND">North Dakota</option>-->
+                            			<!--<option value="NE">Nebraska</option>-->
+                            			<!--<option value="NH">New Hampshire</option>-->
+                            			<!--<option value="NJ">New Jersey</option>-->
+                            			<!--<option value="NM">New Mexico</option>-->
+                            			<!--<option value="NV">Nevada</option>-->
+                            			<!--<option value="NY">New York</option>-->
+                            			<!--<option value="OH">Ohio</option>-->
+                            			<!--<option value="OK">Oklahoma</option>-->
+                            			<!--<option value="OR">Oregon</option>-->
+                            			<!--<option value="PA">Pennsylvania</option>-->
+                            			<!--<option value="PR">Puerto Rico</option>-->
+                            			<!--<option value="RI">Rhode Island</option>-->
+                            			<!--<option value="SC">South Carolina</option>-->
+                            			<!--<option value="SD">South Dakota</option>-->
+                            			<!--<option value="TN">Tennessee</option>-->
+                            			<!--<option value="TX">Texas</option>-->
+                            			<!--<option value="UT">Utah</option>-->
+                            			<!--<option value="VA">Virginia</option>-->
+                            			<!--<option value="VT">Vermont</option>-->
+                            			<!--<option value="WA">Washington</option>-->
+                            			<!--<option value="WI">Wisconsin</option>-->
+                            			<!--<option value="WV">West Virginia</option>-->
+                            			<!--<option value="WY">Wyoming</option>-->
+                            		<!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; student zip code field &ndash;&gt;-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="inputZip" class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">Zip</label>-->
+                                <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-8">-->
+                                    <!--<input type="text" class="form-control" id="inputZip" placeholder="Zip" required>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<br/>-->
+                            <!--<div class="pull-right" id="saveButtonDiv"></div>-->
+                        <!--</fieldset>-->
+                    <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!---->
+    <!--&lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; delete confirm modal &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--<div class="modal fade" id="confirmDeleteModal" role="dialog">-->
+        <!--<div class="modal-dialog modal-sm">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<h2 class="modal-title text-center">Confirm Delete</h2>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<div id="studentToDelete" class="text-center">-->
+                        <!--&lt;!&ndash; data is generated dynamically from script &ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<div id="deleteButtonDiv" class="text-center">-->
+                        <!--&lt;!&ndash; data is generated dynamically from script &ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div id="cancelDeleteDiv" class="modal-footer">-->
+                    <!--<button id="cancelDeleteButton" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!---->
+    <!--&lt;!&ndash; student modal to be popped when table row is clicked &ndash;&gt;-->
+    <!--<div class="modal fade bs-example-modal-sm" id="studentModal" role="dialog">-->
+        <!--<div id="modalData" class="modal-dialog modal-sm">-->
+            <!--&lt;!&ndash; data is generated dynamically from script &ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+    <!---->
+    <!--&lt;!&ndash;&#45;&#45;&#45;&#45; modal to be popped when data is sorted &#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--<div class="modal fade bs-example-modal-sm" id="refreshModal" tabindex="-1" role="dialog">-->
+        <!--<div class="modal-dialog modal-sm">-->
+            <!--<div class="modal-content text-center">-->
+                <!--<div class="modal-header">-->
+                    <!--<h4 class="modal-title">Sorting Data...</h4>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<span class="glyphicon glyphicon-refresh glyphicon-spin modal-glyph"></span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<script src="lib/js/angular-1.6.2.js"></script>
 <script src="lib/js/angular-material-1.1.3.min.js"></script>
 <script src="lib/js/jquery-2.2.4.min.js"></script>
 <script src="lib/js/bootstrap-3.3.6.min.js"></script>

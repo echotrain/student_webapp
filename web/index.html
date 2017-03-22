@@ -18,24 +18,40 @@
 
 <md-content class="container">
     <md-card>
-        <div layout="row" layout-align="center center">
-            <h1 layout="row">Fun with Tables!</h1>
-            <i layout="row" class="material-icons md-48">school</i>
-            <h2 layout="row">Student Data</h2>
+        <div layout="column" layout-align="center center">
+            <h1 class="md-display-3">Fun with Tables!</h1>
+            <i class="material-icons md-display-4">school</i>
+            <h2 class="md-display-1">Student Data</h2>
         </div>
         <!-- add or restore student button group -->
         <section layout="row" layout-align="center center">
-            <md-button class="groupX left" title="Add Student">Add</md-button>
-            <md-button class="groupX right" title="Restore Student">Restore</md-button>
+            <md-button class="md-raised" title="Add Student">
+                <i class="material-icons">person_add</i> Add
+            </md-button>
+            <md-button class="md-raised" title="Restore Student">
+                <i class="material-icons">undo</i>
+            </md-button>
         </section>
-        <!-- toggle view button group -->
+        <!-- FAB speed Dial to toggle view -->
         <div layout="row" layout-align="end">
-            <md-button class="md-icon-button" aria-label="Table View" ng-click="tableViewButton()">
-                <i class="material-icons md-24">person add</i>
-            </md-button>
-            <md-button class="md-icon-button" aria-label="Tile View" ng-click="tileViewButton()">
-                <i class="material-icons md-24">undo</i>
-            </md-button>
+            <md-fab-speed-dial md-direction="left" class="md-scale">
+                <md-fab-trigger>
+                    <md-button aria-label="Menu" class="md-fab md-primary">
+                        <md-tooltip md-direction="left">Change View</md-tooltip>
+                        <md-icon md-font-set="material-icons">menu</md-icon>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="Tile View" class="md-fab md-raised md-mini" ng-click="tileViewButton()">
+                        <md-tooltip md-direction="top">Tile View</md-tooltip>
+                        <md-icon aria-label="Tile View" md-font-set="material-icons">view_module</md-icon>
+                    </md-button>
+                    <md-button aria-label="Table View" class="md-fab md-raised md-mini" ng-click="tableViewButton()">
+                        <md-tooltip md-direction="top">Table View</md-tooltip>
+                        <md-icon aria-label="Table View" md-font-set="material-icons">list</md-icon>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
         </div>
         <!-- TABLE VIEW -->
         <md-list class="switch-show-hide" md-cols="1" md-row-height="200px" ng-show="tableView">

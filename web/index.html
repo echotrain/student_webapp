@@ -18,12 +18,17 @@
 
 <md-content class="container">
     <md-card>
-        <div>
-            <h1>Fun with Tables!</h1>
-            <i class="material-icons md-48">school</i>
-            <h2>Student Data</h2>
+        <div layout="row" layout-align="center center">
+            <h1 layout="row">Fun with Tables!</h1>
+            <i layout="row" class="material-icons md-48">school</i>
+            <h2 layout="row">Student Data</h2>
         </div>
-        <!-- toggle view button group -->>
+        <!-- add or restore student button group -->
+        <section layout="row" layout-align="center center">
+            <md-button class="groupX left" title="Add Student">Add</md-button>
+            <md-button class="groupX right" title="Restore Student">Restore</md-button>
+        </section>
+        <!-- toggle view button group -->
         <div layout="row" layout-align="end">
             <md-button class="md-icon-button" aria-label="Table View" ng-click="tableViewButton()">
                 <i class="material-icons md-24">person add</i>
@@ -32,13 +37,8 @@
                 <i class="material-icons md-24">undo</i>
             </md-button>
         </div>
-        <!-- add or restore student button group -->
-        <div>
-            <md-button title="Add Student">Add</md-button>
-            <md-button title="Restore Student">Restore</md-button>
-        </div>
         <!-- TABLE VIEW -->
-        <md-list class="switch-show-hide" md-cols="1" md-row-height="200px" ng-show="setTableView">
+        <md-list class="switch-show-hide" md-cols="1" md-row-height="200px" ng-show="tableView">
             <md-list-item id="table-style">
                 <div layout="row" layout-align="start center">
                     <b class="" layout="column" layout-align="none" layout-padding>Year</b>
@@ -60,7 +60,7 @@
         </md-list>
 
         <!-- TILES VIEW -->
-        <div class="switch-show-hide" ng-show="setTileView">
+        <div class="switch-show-hide" ng-show="tileView">
             <md-grid-list id="tile-style" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-gutter="4px" md-row-height="200px">
                 <md-grid-tile class="md-1-line " ng-repeat="student in students" role="listitem">
                     <student-tile student="student"></student-tile>

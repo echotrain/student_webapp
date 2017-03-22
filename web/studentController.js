@@ -10,18 +10,29 @@ let schoolYears = {
     4: "Senior"
 }
 
-angular.module('app').controller('studentController', function($scope, $mdDialog, studentSrv, $filter, $timeout) {
+angular.module('app').controller('studentController', function($scope, $http, $mdDialog, studentSrv, $filter, $timeout) {
 
     //variables
     $scope.students = [];
+    $scope.manifest = [];
+    $scope.getStudentCalls = [];
     $scope.tableView = true;
     $scope.tileView = false;
 
     //AJAX json
     function init() {
         studentSrv.getStudents().then(function (result) {
-            $scope.students = result.data;
-            $scope.students.forEach(student => student.startDate = new Date(student.startDate));
+            console.log(result.data); //testing
+            for (let stu in result.data) {
+                $scope.manifest.push(result.data[stu]);
+                $scope.getStudentCalls.push($http.get(`/api/v1/students/${result.data[stu]}.json`)
+                    .then(function (result) {
+                        result.data.id = $scope.manifest[stu];
+                        $scope.students.push(result.data);
+                    }
+                ));
+            }
+            console.log($scope.students); //testing
         });
     }
 

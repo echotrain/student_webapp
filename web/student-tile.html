@@ -6,6 +6,6 @@
         <div>Address:<br/>{{student.street}}<br/>{{student.city}}, {{student.state}}, {{student.zip}}</div>
     </div>
     <md-grid-tile-footer layout-padding>
-        Year: {{student.year}}<br/>Start Date: {{student.startDate}}
+        Year: {{student.year | getSchoolYear}}<br/>Start Date: {{student.startDate}}
     </md-grid-tile-footer>
 </div>

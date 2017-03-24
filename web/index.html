@@ -11,68 +11,68 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" type="text/css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
     <link rel="stylesheet" href="lib/css/angular-material-1.1.3.min.css">
-    <link rel="stylesheet" href="studentData.css" type="text/css">
+    <link rel="stylesheet" href="student-app.css" type="text/css">
 </head>
 
 <body ng-controller="studentController">
 
 <md-content class="container">
-    <md-card>
+    <md-card md-colors="{background: 'blue-grey-800'}">
         <div layout="column" layout-align="center center">
-            <h1 class="md-display-3">Fun with Tables!</h1>
+            <h1 class="md-display-2">Fun with Tables!</h1>
             <i class="material-icons logo">school</i>
             <h2 class="md-display-1">Student Data</h2>
         </div>
         <!-- FAB speed Dial toolbar to add/restore student data or toggle the view -->
         <md-fab-speed-dial md-direction="up" class="md-scale md-fab-bottom-right">
             <md-fab-trigger>
-                <md-button aria-label="Menu" class="md-fab md-primary">
+                <md-button aria-label="Menu" class="md-fab pop-menu">
                     <md-tooltip md-direction="left">Tools</md-tooltip>
-                    <md-icon md-font-set="material-icons">menu</md-icon>
+                    <md-icon class="material-icons">menu</md-icon>
                 </md-button>
             </md-fab-trigger>
             <md-fab-actions>
                 <md-button aria-label="Tile View" class="md-fab md-raised md-mini" ng-click="tileViewButton()">
                     <md-tooltip md-direction="left">Tile View</md-tooltip>
-                    <md-icon md-font-set="material-icons">view_module</md-icon>
+                    <md-icon class="material-icons">view_module</md-icon>
                 </md-button>
                 <md-button aria-label="Table View" class="md-fab md-raised md-mini" ng-click="tableViewButton()">
                     <md-tooltip md-direction="left">Table View</md-tooltip>
-                    <md-icon md-font-set="material-icons">list</md-icon>
+                    <md-icon class="material-icons">list</md-icon>
                 </md-button>
-                <md-button aria-label="Add Student" class="md-fab md-raised md-mini" ng-click="">
+                <md-button aria-label="Add Student" class="md-fab md-raised md-mini" ng-click="popAddStudent()">
                     <md-tooltip md-direction="left">Add Student</md-tooltip>
-                    <md-icon md-font-set="material-icons">person_add</md-icon>
+                    <md-icon class="material-icons">person_add</md-icon>
                 </md-button>
                 <md-button aria-label="Restore Student" class="md-fab md-raised md-mini" ng-click="">
                     <md-tooltip md-direction="left">Restore Student</md-tooltip>
-                    <md-icon md-font-set="material-icons">undo</md-icon>
+                    <md-icon class="material-icons">undo</md-icon>
                 </md-button>
             </md-fab-actions>
         </md-fab-speed-dial>
         <!-- TABLE VIEW -->
-        <md-list class="switch-show-hide" md-cols="1" md-row-height="200px" ng-show="tableView">
-            <md-list-item id="table-style">
-                <div layout="row" layout-align="start center">
-                    <b class="" layout="column" layout-align="none" layout-padding>Year</b>
-                    <b class="" layout="column" layout-align="none" layout-padding>Name</b>
-                    <b class="" layout="column" layout-align="none" layout-padding>Start Date</b>
-                    <b class="" layout="column" layout-align="none" layout-padding>Street</b>
-                    <b class="" layout="column" layout-align="none" layout-padding>City</b>
-                    <b class="" layout="column" layout-align="none" layout-padding>State</b>
-                    <b class="" layout="column" layout-align="none" layout-padding>Zip</b>
-                    <b class="" layout="column" layout-align="none" layout-padding>Phone</b>
-                    <b class="" layout="column" layout-align="none" layout-padding>Edit</b>
-                    <b class="" layout="column" layout-align="none" layout-padding>Delete</b>
-                </div>
-            </md-list-item>
-            <md-list-item ng-repeat="student in students">
-                <student-table student="student"></student-table>
-                <md-divider ng-if="!$last"></md-divider>
-            </md-list-item>
-        </md-list>
+        <md-card layout="column" layout-align="center center">
+            <md-list class="switch-show-hide" md-cols="1" md-row-height="200px" ng-show="tableView">
+                <md-list-item id="table-style">
+                    <div layout="row" layout-align="start center">
+                        <b class="year-cell" layout="column" layout-align="none" layout-padding>Year</b>
+                        <b class="name-cell" layout="column" layout-align="none" layout-padding>Name</b>
+                        <b class="date-cell" layout="column" layout-align="none" hide show-gt-sm layout-padding>Start Date</b>
+                        <b class="street-cell" layout="column" layout-align="none" hide show-gt-md layout-padding>Street</b>
+                        <b class="city-cell" layout="column" layout-align="none" hide show-gt-xs layout-padding>City</b>
+                        <b class="state-cell" layout="column" layout-align="none" hide show-gt-sm layout-padding>State</b>
+                        <b class="zip-cell" layout="column" layout-align="none" hide show-gt-sm layout-padding>Zip</b>
+                        <b class="phone-cell" layout="column" layout-align="none" hide show-gt-sm layout-padding>Phone</b>
+                    </div>
+                </md-list-item>
+                <md-list-item ng-repeat="student in students" class="student-row">
+                    <student-table student="student"></student-table>
+                    <md-divider ng-if="!$last"></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-card>
         <!-- TILES VIEW -->
-        <div class="switch-show-hide" ng-show="tileView">
+        <div class="switch-show-hide layout-content" ng-show="tileView">
             <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-gutter="10px" md-row-height="200px">
                 <md-grid-tile class="md-1-line" id="tile-style" ng-repeat="student in students" role="listitem">
                     <student-tile student="student"></student-tile>
@@ -82,6 +82,9 @@
     </md-card>
 </md-content>
 
+<!-- Add Modal -->
+
+
 <script src="lib/js/jquery-2.2.4.min.js"></script>
 <script src="lib/js/angular-1.6.2.min.js"></script>
 <script src="lib/js/angular-animate.min.js"></script>
@@ -89,7 +92,6 @@
 <script src="lib/js/angular-material-1.1.3.min.js"></script>
 <script src="lib/js/js.cookie-2.1.2.js"></script>
 <script src="app.js"></script>
-<!--<script src="sortComparators.js"></script>-->
 
 </body>
 

@@ -1,20 +1,22 @@
 <div layout="row" layout-align="start center" class="md-list-item-text">
     <div class="md-list-item-inner">
-        <span class="" layout="column" layout-align="none" layout-padding>{{student.year | getSchoolYear}}</span>
-        <b class="" layout="column" layout-align="none" layout-padding>{{student.lname}}, {{student.fname}}</b>
-        <span class="" layout="column" layout-align="none" layout-padding>{{student.startDate}}</span>
-        <span class="" layout="column" layout-align="none" layout-padding>{{student.street}}</span>
-        <span class="" layout="column" layout-align="none" layout-padding>{{student.city}}</span>
-        <span class="" layout="column" layout-align="none" layout-padding>{{student.state}}</span>
-        <span class="" layout="column" layout-align="none" layout-padding>{{student.zip}}</span>
-        <span class="" layout="column" layout-align="none" layout-padding>{{student.phone}}</span>
+        <span class="year-cell" layout="column" layout-align="none" layout-padding>{{student.year | getSchoolYear}}</span>
+        <b class="name-cell" layout="column" layout-align="none" layout-padding>{{student.lname}}, {{student.fname}}</b>
+        <span class="date-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.startDate}}</span>
+        <span class="street-cell" layout="column" layout-align="none" hide show-gt-md flex layout-padding>{{student.street}}</span>
+        <span class="city-cell" layout="column" layout-align="none" hide show-gt-xs flex layout-padding>{{student.city}}</span>
+        <span class="state-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.state}}</span>
+        <span class="zip-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.zip}}</span>
+        <span class="phone-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.phone}}</span>
     </div>
     <div class="md-secondary-container">
         <md-button class="md-secondary md-icon-button md-ink-ripple" ng-click="" aria-label="Edit Student">
-            <md-icon class="md-secondary" md-font-set="material-icons">edit</md-icon>
+            <md-tooltip md-direction="top">Edit</md-tooltip>
+            <md-icon class="md-secondary material-icons">edit</md-icon>
         </md-button>
         <md-button class="md-secondary md-icon-button md-ink-ripple" ng-click="" aria-label="Delete Student">
-            <md-icon class="md-secondary" md-font-set="material-icons">delete_forever</md-icon>
+            <md-tooltip md-direction="top">Delete</md-tooltip>
+            <md-icon class="md-secondary material-icons">delete_forever</md-icon>
         </md-button>
     </div>
 </div>

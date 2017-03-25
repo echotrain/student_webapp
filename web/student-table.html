@@ -10,11 +10,13 @@
         <span class="phone-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.phone}}</span>
     </div>
     <div class="md-secondary-container">
-        <md-button class="md-secondary md-icon-button md-ink-ripple" ng-click="" aria-label="Edit Student">
+        <md-button class="md-secondary md-icon-button md-ink-ripple" aria-label="Edit Student"
+                   ng-click="setFormType('Edit'); requestStudent(student.id)">
             <md-tooltip md-direction="top">Edit</md-tooltip>
             <md-icon class="md-secondary material-icons">edit</md-icon>
         </md-button>
-        <md-button class="md-secondary md-icon-button md-ink-ripple" ng-click="" aria-label="Delete Student">
+        <md-button class="md-secondary md-icon-button md-ink-ripple" aria-label="Delete Student"
+                   ng-click="setFormType('Delete'); requestStudent(student.id)">
             <md-tooltip md-direction="top">Delete</md-tooltip>
             <md-icon class="md-secondary material-icons">delete_forever</md-icon>
         </md-button>

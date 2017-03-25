@@ -6,14 +6,14 @@ app.factory('studentSrv', function($http) {
         getStudents: function() {
             return $http.get('/api/v1/students.json');
         },
-        updateStudent: function(updateStudent) {
-            return $http.put(`/api/v1/students/${updateStudent.id}.json`, updateStudent);
-        },
         addStudent: function(student) {
             return $http.post('api/v1/students.json', student);
         },
-        deleteStudent: function(studentID) {
-            return $http.delete(`/api/v1/students/${studentID}.json`);
+        editStudent: function(editStudent) {
+            return $http.put(`/api/v1/students/${editStudent.id}.json`, editStudent);
+        },
+        deleteStudent: function(deleteStudent) {
+            return $http.delete(`/api/v1/students/${deleteStudent.id}.json`);
         }
     };
     return studentService;
@@ -22,11 +22,19 @@ app.factory('studentSrv', function($http) {
 app.controller('studentController', function($scope, $http, $mdDialog, studentSrv, $filter, $timeout) {
 
     //variables
+    $scope.years = [1, 2, 3, 4];
+    $scope.states = [ 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+        'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+        'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+        'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+        'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+    $scope.selectedStudent = {};
     $scope.students = [];
     $scope.manifest = [];
     $scope.getStudentCalls = [];
     $scope.tableView = true;
     $scope.tileView = false;
+    $scope.formType = '';
 
     //AJAX json
     function init() {
@@ -72,6 +80,93 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
         }
     }
     init();
+
+    $scope.close = function() {
+        $scope.selectedStudent = {};
+        $mdDialog.cancel();
+    };
+
+    $scope.setFormType = function(type) {
+        $scope.formType = type;
+    };
+
+    $scope.submit = function() {
+        if ($scope.formType === 'Add') {
+            $scope.addStudentSubmit();
+        }
+        else if ($scope.formType === 'Edit') {
+            $scope.editStudentSubmit();
+        }
+        else if ($scope.formType === 'Delete') {
+            $scope.deleteStudentSubmit();
+        } else {
+            alert('Unexpected error occurred. Try again.');
+        }
+    };
+
+    $scope.requestStudent = function(id) {
+        $http.get(`/api/v1/students/${id}.json`).then(function (result) {
+            result.data.id = id;
+            result.data.startDate = new Date(result.data.startDate);
+            $scope.selectedStudent = result.data;
+            console.log('requestStudent function has executed!!!'); //testing
+            console.log($scope.selectedStudent); //testing
+            if ($scope.formType !== 'Delete') {
+                $scope.popFormDialog();
+            } else {
+                $scope.popDeleteDialog();
+            }
+        });
+    };
+
+    $scope.popFormDialog = function($event) {
+        $mdDialog.show({
+            contentElement: '#formDialog',
+            parent: angular.element(document.body),
+            targetEvent: $event
+        });
+    };
+
+    $scope.popDeleteDialog = function($event) {
+        $mdDialog.show({
+            contentElement: '#deleteDialog',
+            parent: angular.element(document.body),
+            targetEvent: $event
+        });
+    };
+
+    $scope.addStudentSubmit = function() {
+        $scope.selectedStudent.startDate = $filter('date')($scope.selectedStudent.startDate, 'shortDate');
+        console.log('addStudentSubmit has executed!!!'); //testing
+        console.log($scope.selectedStudent); //testing
+        //testing
+        // studentSrv.addStudent($scope.selectedStudent).then(function() {
+        //     init();
+        // });
+        $scope.close();
+    };
+
+    $scope.editStudentSubmit = function() {
+        $scope.selectedStudent.startDate = $filter('date')($scope.selectedStudent.startDate, 'shortDate');
+        console.log('editStudentSubmit has executed!!!'); //testing
+        console.log($scope.selectedStudent); //testing
+        //testing
+        // studentSrv.editStudent($scope.selectedStudent).then(function() {
+        //     init();
+        // });
+        $scope.close();
+    };
+
+    $scope.deleteStudentSubmit = function() {
+        console.log('deleteStudentSubmit has executed!!!'); //testing
+        console.log($scope.selectedStudent); //testing
+        //testing
+        // studentSrv.deleteStudent($scope.selectedStudent).then(function() {
+        //     init();
+        // });
+        $scope.close();
+    };
+
 });
 
 app.directive('studentTable', () => {

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Josh Anderson | Fun with Tables</title>
+    <title>Josh Anderson | Student Data Demo</title>
     <link rel="icon" href="img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" type="text/css" />
@@ -19,14 +19,14 @@
 <md-content class="container">
     <md-card md-colors="{background: 'blue-grey-800'}">
         <div layout="column" layout-align="center center">
-            <h1 class="md-display-2">Fun with Tables!</h1>
+            <h1 class="md-display-2">Student Data</h1>
             <i class="material-icons logo">school</i>
-            <h2 class="md-display-1">Student Data</h2>
+            <br/>
         </div>
         <!-- FAB speed Dial toolbar to add/restore student data or toggle the view -->
         <md-fab-speed-dial md-direction="up" class="md-scale md-fab-bottom-right">
             <md-fab-trigger>
-                <md-button aria-label="Menu" class="md-fab pop-menu">
+                <md-button aria-label="Menu" class="md-fab big-red">
                     <md-tooltip md-direction="left">Tools</md-tooltip>
                     <md-icon class="material-icons">menu</md-icon>
                 </md-button>
@@ -40,7 +40,8 @@
                     <md-tooltip md-direction="left">Table View</md-tooltip>
                     <md-icon class="material-icons">list</md-icon>
                 </md-button>
-                <md-button aria-label="Add Student" class="md-fab md-raised md-mini" ng-click="popAddStudent()">
+                <md-button aria-label="Add Student" class="md-fab md-raised md-mini"
+                           ng-click="setFormType('Add'); popFormDialog()">
                     <md-tooltip md-direction="left">Add Student</md-tooltip>
                     <md-icon class="material-icons">person_add</md-icon>
                 </md-button>
@@ -51,7 +52,7 @@
             </md-fab-actions>
         </md-fab-speed-dial>
         <!-- TABLE VIEW -->
-        <md-card layout="column" layout-align="center center">
+        <md-card layout="column" layout-align="center center" style="overflow: auto;">
             <md-list class="switch-show-hide" md-cols="1" md-row-height="200px" ng-show="tableView">
                 <md-list-item id="table-style">
                     <div layout="row" layout-align="start center">
@@ -82,8 +83,102 @@
     </md-card>
 </md-content>
 
-<!-- Add Modal -->
+<!-- student data form mdDialog for adding or editing -->
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="formDialog">
+        <md-dialog>
+            <form ng-cloak name="studentForm">
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <h4>{{formType}}  Student</h4>
+                        <span flex></span>
+                        <md-button class="md-icon-button md-ink-ripple" ng-click="close()">
+                            <md-icon class="material-icons" aria-label="Close Dialog">clear</md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+                        <md-input-container class="md-block">
+                            <label>First Name</label>
+                            <input ng-model="selectedStudent.fname">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Last Name</label>
+                            <input ng-model="selectedStudent.lname">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Year</label>
+                            <md-select ng-model="selectedStudent.year">
+                                <md-option ng-repeat="year in years" value="{{year}}">
+                                    {{year | getSchoolYear}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Start Date</label>
+                            <md-datepicker ng-model="selectedStudent.startDate"></md-datepicker>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Street Address</label>
+                            <input ng-model="selectedStudent.street">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>City</label>
+                            <input ng-model="selectedStudent.city">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>State</label>
+                            <md-select ng-model="selectedStudent.state">
+                                <md-option ng-repeat="state in states" value="{{state}}">
+                                    {{state}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Zip Code</label>
+                            <input ng-model="selectedStudent.zip">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Phone Number</label>
+                            <input type="tel" ng-model="selectedStudent.phone">
+                        </md-input-container>
+                        <md-button class="md-raised md-primary" ng-click="submit()">Submit</md-button>
+                    </div>
+                </md-dialog-content>
+            </form>
+        </md-dialog>
+    </div>
+</div>
 
+<div style="visibility: hidden">
+    <div class="md-dialog-container md-warn" id="deleteDialog">
+        <md-dialog>
+            <form ng-cloak>
+                <md-toolbar>
+                    <div class="md-toolbar-tools big-red">
+                        <h4>{{formType}} Student</h4>
+                        <span flex></span>
+                        <md-button class="md-icon-button md-ink-ripple" ng-click="close()">
+                            <md-icon class="material-icons" aria-label="Close Dialog">clear</md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content>
+                    <div class="md-dialog-content" layout="column" layout-align="center center">
+                        <p>Are you sure you want to delete?</p>
+                        <b>{{selectedStudent.fname}} {{selectedStudent.lname}}</b>
+                        <br/>
+                        <div layout="row" layout-align="center">
+                            <md-button class="md-raised" ng-click="close()">Cancel</md-button>
+                            <md-button class="md-raised big-red" ng-click="submit()">Delete</md-button>
+                        </div>
+                    </div>
+                </md-dialog-content>
+            </form>
+        </md-dialog>
+    </div>
+</div>
 
 <script src="lib/js/jquery-2.2.4.min.js"></script>
 <script src="lib/js/angular-1.6.2.min.js"></script>

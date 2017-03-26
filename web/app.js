@@ -19,7 +19,7 @@ app.factory('studentSrv', function($http) {
     return studentService;
 });
 
-app.controller('studentController', function($scope, $http, $mdDialog, studentSrv, $filter, $timeout) {
+app.controller('studentController', function($scope, studentSrv, $http, $mdDialog, $filter, $timeout) {
 
     //variables
     $scope.years = [1, 2, 3, 4];
@@ -42,7 +42,6 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
     //AJAX json
     function init() {
         studentSrv.getStudents().then(function (result) {
-            console.log(result.data); //testing
             for (let stu in result.data) {
                 $scope.manifest.push(result.data[stu]);
                 $scope.getStudentCalls.push($http.get(`/api/v1/students/${result.data[stu]}.json`)
@@ -52,7 +51,6 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
                         }
                     ));
             }
-            console.log($scope.students); //testing
         });
         $scope.checkCookies();
     }
@@ -61,7 +59,6 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
         if (!$scope.tileView) {
             $scope.tableView = $scope.tileView;
             $scope.tileView = !$scope.tileView;
-            console.log("You clicked the tile view button..."); //testing
             Cookies.set('default', 'tiles');
         }
     };
@@ -70,15 +67,12 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
         if (!$scope.tableView) {
             $scope.tileView = $scope.tableView;
             $scope.tableView = !$scope.tableView;
-            console.log("You clicked the table view button..."); //testing
             Cookies.set('default', 'table');
         }
     };
 
     $scope.checkCookies = function() {
-        console.log('The Cookies check executed!!!'); //testing
         if (Cookies.get('default') === 'tiles') {
-            console.log("... and you want those sweet sweet tiles."); //testing
             $scope.tileViewButton();
         }
     };
@@ -104,6 +98,7 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
             $scope.deleteStudentSubmit();
         } else {
             alert('Unexpected error occurred. Try again.');
+            $scope.close();
         }
     };
 
@@ -112,12 +107,16 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
             result.data.id = id;
             result.data.startDate = new Date(result.data.startDate);
             $scope.selectedStudent = result.data;
-            console.log('requestStudent function has executed!!!'); //testing
-            console.log($scope.selectedStudent); //testing
-            if ($scope.formType !== 'Delete') {
-                $scope.popFormDialog();
-            } else {
+            if ($scope.formType === 'Delete') {
                 $scope.popDeleteDialog();
+            }
+            else if ($scope.formType === 'Edit' || $scope.formType === 'Add') {
+                $scope.popFormDialog();
+            }
+            else if ($scope.formType === 'Info') {
+                $scope.popInfoDialog();
+            } else {
+                alert('Unexpected error occurred. Try again.');
             }
         });
     };
@@ -138,13 +137,22 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
         });
     };
 
+    $scope.popInfoDialog = function($event) {
+        $mdDialog.show({
+            contentElement: '#infoDialog',
+            parent: angular.element(document.body),
+            targetEvent: $event,
+            clickOutsideToClose: true
+        });
+    };
+
     $scope.sortBy = function(sortType) {
         $mdDialog.show({
             contentElement: '#loadingDialog',
             parent: angular.element(document.body),
             escapeToClose: false
         }).then($timeout(function() {
-            $scope.reverse = (sortType !== null && $scope.sortType === sortType) ? !$scope.reverse : false;
+            $scope.reverse = (sortType !== null && angular.equals($scope.sortType, sortType)) ? !$scope.reverse : false;
             $scope.sortType = sortType;
             $scope.students = $filter('orderBy')($scope.students, $scope.sortType, $scope.reverse);
             $mdDialog.hide();

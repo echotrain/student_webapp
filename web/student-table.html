@@ -1,5 +1,5 @@
 <div layout="row" layout-align="start center" class="md-list-item-text">
-    <div class="md-list-item-inner">
+    <div class="md-list-item-inner" ng-click="setFormType('Info'); requestStudent(student.id)">
         <span id="year-cell" layout="column" layout-align="none" layout-padding>{{student.year | getSchoolYear}}</span>
         <b id="name-cell" layout="column" layout-align="none" layout-padding>{{student.lname}}, {{student.fname}}</b>
         <span id="date-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.startDate}}</span>

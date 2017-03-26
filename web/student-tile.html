@@ -2,10 +2,32 @@
     <md-grid-tile-header layout-padding>
         <b>{{student.fname}} {{student.lname}}</b>
     </md-grid-tile-header>
-    <div>
-        <div>Address:<br/>{{student.street}}<br/>{{student.city}}, {{student.state}}, {{student.zip}}</div>
+    <div class="md-dialog-content" layout="column" layout-align="start start">
+        <br/><br/>
+        <md-list-item>
+            <md-icon class="material-icons md-avatar-icon">school</md-icon>
+            <div class="md-list-item-text" layout="column">
+                <p>{{student.year | getSchoolYear}}</p>
+            </div>
+        </md-list-item>
+        <md-list-item>
+            <md-icon class="material-icons md-avatar-icon">today</md-icon>
+            <div class="md-list-item-text" layout="column">
+                <p>{{student.startDate}}</p>
+            </div>
+        </md-list-item>
+        <md-list-item>
+            <md-icon class="material-icons md-avatar-icon">phone</md-icon>
+            <div class="md-list-item-text" layout="column">
+                <p>{{student.phone}}</p>
+            </div>
+        </md-list-item>
+        <md-list-item class="md-2-line">
+            <md-icon class="material-icons md-avatar-icon">place</md-icon>
+            <div class="md-list-item-text" layout="column">
+                <h3>{{student.street}}</h3>
+                <p>{{student.city}},  {{student.state}},  {{student.zip}}</p>
+            </div>
+        </md-list-item>
     </div>
-    <md-grid-tile-footer layout-padding>
-        Year: {{student.year | getSchoolYear}}<br/>Start Date: {{student.startDate}}
-    </md-grid-tile-footer>
 </div>

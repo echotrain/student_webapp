@@ -51,7 +51,7 @@
                 </md-button>
             </md-fab-actions>
         </md-fab-speed-dial>
-        <!-- TABLE VIEW -->
+        <!-- table view -->
         <md-card layout="column" layout-align="center center" style="overflow: auto;">
             <md-list class="switch-show-hide" md-cols="1" md-row-height="200px" ng-show="tableView">
                 <md-list-item>
@@ -62,7 +62,7 @@
                         </div>
                         <div id="name-cell" layout="row" layout-align="none" layout-padding>
                             <b class="table-header" ng-click="sortBy(['lname', 'fname'])">Name</b>
-                            <span class="material-icons sort" ng-show="sortType === ['lname', 'fname']" ng-class="{reverse: reverse}"></span>
+                            <span class="material-icons sort" ng-show="sortType.length === 2" ng-class="{reverse: reverse}"></span>
                         </div>
                         <div id="date-cell" layout="row" layout-align="none" hide show-gt-sm layout-padding>
                             <b class="table-header" ng-click="sortBy('startDate')">Start Date</b>
@@ -96,9 +96,9 @@
                 </md-list-item>
             </md-list>
         </md-card>
-        <!-- TILES VIEW -->
+        <!-- tiles view -->
         <div class="switch-show-hide layout-content" ng-show="tileView">
-            <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-gutter="10px" md-row-height="200px">
+            <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-gutter="10px" md-row-height="340px">
                 <md-grid-tile class="md-1-line" id="tile-style" ng-repeat="student in students" role="listitem">
                     <student-tile student="student"></student-tile>
                 </md-grid-tile>
@@ -199,6 +199,45 @@
                     </div>
                 </md-dialog-content>
             </form>
+        </md-dialog>
+    </div>
+</div>
+<!-- mdDialog for displaying data of the selected student -->
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="infoDialog">
+        <md-dialog aria-label="Info">
+            <md-toolbar md-colors="{background: 'blue-grey-800'}">
+                <div class="md-toolbar-tools">
+                    <h4>{{selectedStudent.fname}} {{selectedStudent.lname}}</h4>
+                    <span flex></span>
+                    <md-button class="md-icon-button md-ink-ripple" ng-click="close()">
+                        <md-icon class="material-icons" aria-label="Close Dialog">clear</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-dialog-content>
+                <div class="md-dialog-content" layout="column" layout-align="start start">
+                    <md-list-item>
+                        <md-icon class="material-icons md-avatar-icon">school</md-icon>
+                        <div class="md-list-item-text" layout="column">
+                            <p>{{selectedStudent.year | getSchoolYear}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon class="material-icons md-avatar-icon">phone</md-icon>
+                        <div class="md-list-item-text" layout="column">
+                            <p>{{selectedStudent.phone}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="md-2-line">
+                        <md-icon class="material-icons md-avatar-icon">place</md-icon>
+                        <div class="md-list-item-text" layout="column">
+                            <h3>{{selectedStudent.street}}</h3>
+                            <p>{{selectedStudent.city}},  {{selectedStudent.state}},  {{selectedStudent.zip}}</p>
+                        </div>
+                    </md-list-item>
+                </div>
+            </md-dialog-content>
         </md-dialog>
     </div>
 </div>

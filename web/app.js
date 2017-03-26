@@ -1,4 +1,4 @@
-// code for the ng-app angular module 'app'
+// ng-app directive for root angular module application ('app')
 let app = angular.module('app', ['ngMaterial']);
 
 app.factory('studentSrv', function($http) {
@@ -35,6 +35,9 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
     $scope.tableView = true;
     $scope.tileView = false;
     $scope.formType = '';
+    $scope.sortType = 'name';
+    $scope.reverse = true;
+    const LOAD_TIME = 1000;
 
     //AJAX json
     function init() {
@@ -51,7 +54,7 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
             }
             console.log($scope.students); //testing
         });
-        checkCookies();
+        $scope.checkCookies();
     }
 
     $scope.tileViewButton = function() {
@@ -72,13 +75,13 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
         }
     };
 
-    function checkCookies() {
-        console.log("The Cookies check executed!..."); //testing
-        if (Cookies.get('default') == 'tiles') {
+    $scope.checkCookies = function() {
+        console.log('The Cookies check executed!!!'); //testing
+        if (Cookies.get('default') === 'tiles') {
             console.log("... and you want those sweet sweet tiles."); //testing
             $scope.tileViewButton();
         }
-    }
+    };
     init();
 
     $scope.close = function() {
@@ -133,6 +136,19 @@ app.controller('studentController', function($scope, $http, $mdDialog, studentSr
             parent: angular.element(document.body),
             targetEvent: $event
         });
+    };
+
+    $scope.sortBy = function(sortType) {
+        $mdDialog.show({
+            contentElement: '#loadingDialog',
+            parent: angular.element(document.body),
+            escapeToClose: false
+        }).then($timeout(function() {
+            $scope.reverse = (sortType !== null && $scope.sortType === sortType) ? !$scope.reverse : false;
+            $scope.sortType = sortType;
+            $scope.students = $filter('orderBy')($scope.students, $scope.sortType, $scope.reverse);
+            $mdDialog.hide();
+        }, LOAD_TIME));
     };
 
     $scope.addStudentSubmit = function() {

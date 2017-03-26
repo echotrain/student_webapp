@@ -38,7 +38,7 @@
                 </md-button>
                 <md-button aria-label="Table View" class="md-fab md-raised md-mini" ng-click="tableViewButton()">
                     <md-tooltip md-direction="left">Table View</md-tooltip>
-                    <md-icon class="material-icons">list</md-icon>
+                    <md-icon class="material-icons">view_list</md-icon>
                 </md-button>
                 <md-button aria-label="Add Student" class="md-fab md-raised md-mini"
                            ng-click="setFormType('Add'); popFormDialog()">
@@ -47,23 +47,47 @@
                 </md-button>
                 <md-button aria-label="Restore Student" class="md-fab md-raised md-mini" ng-click="">
                     <md-tooltip md-direction="left">Restore Student</md-tooltip>
-                    <md-icon class="material-icons">undo</md-icon>
+                    <md-icon class="material-icons">unarchive</md-icon>
                 </md-button>
             </md-fab-actions>
         </md-fab-speed-dial>
         <!-- TABLE VIEW -->
         <md-card layout="column" layout-align="center center" style="overflow: auto;">
             <md-list class="switch-show-hide" md-cols="1" md-row-height="200px" ng-show="tableView">
-                <md-list-item id="table-style">
-                    <div layout="row" layout-align="start center">
-                        <b class="year-cell" layout="column" layout-align="none" layout-padding>Year</b>
-                        <b class="name-cell" layout="column" layout-align="none" layout-padding>Name</b>
-                        <b class="date-cell" layout="column" layout-align="none" hide show-gt-sm layout-padding>Start Date</b>
-                        <b class="street-cell" layout="column" layout-align="none" hide show-gt-md layout-padding>Street</b>
-                        <b class="city-cell" layout="column" layout-align="none" hide show-gt-xs layout-padding>City</b>
-                        <b class="state-cell" layout="column" layout-align="none" hide show-gt-sm layout-padding>State</b>
-                        <b class="zip-cell" layout="column" layout-align="none" hide show-gt-sm layout-padding>Zip</b>
-                        <b class="phone-cell" layout="column" layout-align="none" hide show-gt-sm layout-padding>Phone</b>
+                <md-list-item>
+                    <div id="table-style" layout="row" layout-align="start center">
+                        <div id="year-cell" layout="row" layout-align="none" layout-padding>
+                            <b class="table-header" ng-click="sortBy('year')">Year</b>
+                            <span class="material-icons sort" ng-show="sortType === 'year'" ng-class="{reverse: reverse}"></span>
+                        </div>
+                        <div id="name-cell" layout="row" layout-align="none" layout-padding>
+                            <b class="table-header" ng-click="sortBy(['lname', 'fname'])">Name</b>
+                            <span class="material-icons sort" ng-show="sortType === ['lname', 'fname']" ng-class="{reverse: reverse}"></span>
+                        </div>
+                        <div id="date-cell" layout="row" layout-align="none" hide show-gt-sm layout-padding>
+                            <b class="table-header" ng-click="sortBy('startDate')">Start Date</b>
+                            <span class="material-icons sort" ng-show="sortType === 'startDate'" ng-class="{reverse: reverse}"></span>
+                        </div>
+                        <div id="street-cell" layout="row" layout-align="none" hide show-gt-md layout-padding>
+                            <b class="table-header" ng-click="sortBy('street')">Street</b>
+                            <span class="material-icons sort" ng-show="sortType === 'street'" ng-class="{reverse: reverse}"></span>
+                        </div>
+                        <div id="city-cell" layout="row" layout-align="none" hide show-gt-xs layout-padding>
+                            <b class="table-header" ng-click="sortBy('city')">City</b>
+                            <span class="material-icons sort" ng-show="sortType === 'city'" ng-class="{reverse: reverse}"></span>
+                        </div>
+                        <div id="state-cell" layout="row" layout-align="none" hide show-gt-sm layout-padding>
+                            <b class="table-header" ng-click="sortBy('state')">State</b>
+                            <span class="material-icons sort" ng-show="sortType === 'state'" ng-class="{reverse: reverse}"></span>
+                        </div>
+                        <div id="zip-cell" layout="row" layout-align="none" hide show-gt-sm layout-padding>
+                            <b class="table-header" ng-click="sortBy('zip')">Zip</b>
+                            <span class="material-icons sort" ng-show="sortType === 'zip'" ng-class="{reverse: reverse}"></span>
+                        </div>
+                        <div id="phone-cell" layout="row" layout-align="none" hide show-gt-sm layout-padding>
+                            <b class="table-header" ng-click="sortBy('phone')">Phone</b>
+                            <span class="material-icons sort" ng-show="sortType === 'phone'" ng-class="{reverse: reverse}"></span>
+                        </div>
                     </div>
                 </md-list-item>
                 <md-list-item ng-repeat="student in students" class="student-row">
@@ -82,8 +106,7 @@
         </div>
     </md-card>
 </md-content>
-
-<!-- student data form mdDialog for adding or editing -->
+<!-- mdDialog for adding or editing student data-->
 <div style="visibility: hidden">
     <div class="md-dialog-container" id="formDialog">
         <md-dialog>
@@ -150,7 +173,7 @@
         </md-dialog>
     </div>
 </div>
-
+<!-- mdDialog for deleting student data-->
 <div style="visibility: hidden">
     <div class="md-dialog-container md-warn" id="deleteDialog">
         <md-dialog>
@@ -176,6 +199,25 @@
                     </div>
                 </md-dialog-content>
             </form>
+        </md-dialog>
+    </div>
+</div>
+<!-- mdDialog to be displayed when loading the sorted table -->
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="loadingDialog">
+        <md-dialog aria-label="Loading">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h4>Loading...</h4>
+                </div>
+            </md-toolbar>
+            <md-dialog-content>
+                <div class="md-dialog-content" layout="column" layout-align="center center">
+                    <div layout="row" layout-sm="column" layout-align="space-around">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                </div>
+            </md-dialog-content>
         </md-dialog>
     </div>
 </div>

@@ -35,7 +35,7 @@ app.controller('studentController', function($scope, studentSrv, $http, $mdDialo
     $scope.getStudentCalls = [];
     $scope.tableView = true;
     $scope.tileView = false;
-    $scope.formType = '';
+    $scope.dialogType = '';
     $scope.sortType = 'name';
     $scope.reverse = true;
     const LOAD_TIME = 1000;
@@ -84,42 +84,63 @@ app.controller('studentController', function($scope, studentSrv, $http, $mdDialo
         $mdDialog.cancel();
     };
 
-    $scope.setFormType = function(type) {
-        $scope.formType = type;
+    $scope.setDialogType = function(type) {
+        $scope.dialogType = type;
     };
 
     $scope.submit = function() {
-        if ($scope.formType === 'Add') {
+        if ($scope.dialogType === 'Add') {
             $scope.addStudentSubmit();
         }
-        else if ($scope.formType === 'Edit') {
+        else if ($scope.dialogType === 'Edit') {
             $scope.editStudentSubmit();
         }
-        else if ($scope.formType === 'Delete') {
+        else if ($scope.dialogType === 'Delete') {
             $scope.deletedStudents.push($scope.selectedStudent);
             $scope.deleteStudentSubmit();
-        } else {
+        }
+        else if ($scope.dialogType === 'Restore') {
+            console.log('all deleted students available for restore:'); //testing
+            console.log($scope.deletedStudents); //testing
+            console.log('selected student to be restored:'); // testing
+            console.log($scope.selectedStudent); //testing
+            $scope.deletedStudents = $filter('filter')($scope.deletedStudents, !$scope.selectedStudent);
+            console.log('deleted students post restore:'); //testing
+            console.log($scope.deletedStudents); //testing
+            $scope.addStudentSubmit();
+        }
+        else {
             alert('Unexpected error occurred. Try again.');
             $scope.close();
         }
     };
 
-    $scope.requestStudent = function(id) {
-        $http.get(`/api/v1/students/${id}.json`).then(function (result) {
-            result.data.id = id;
-            result.data.startDate = new Date(result.data.startDate);
-            $scope.selectedStudent = result.data;
-            if ($scope.formType === 'Delete') {
-                $scope.popDeleteDialog();
-            }
-            else if ($scope.formType === 'Edit' || $scope.formType === 'Add') {
-                $scope.popFormDialog();
-            }
-            else if ($scope.formType === 'Info') {
-                $scope.popInfoDialog();
-            } else {
-                alert('Unexpected error occurred. Try again.');
-            }
+    $scope.getStudent = function(_id) {
+        $scope.selectedStudent = $scope.students.find(function(student) {
+            return student.id === _id;
+        });
+        if ($scope.dialogType === 'Info') {
+            $scope.popInfoDialog();
+        }
+        else if ($scope.dialogType === 'Edit') {
+            $scope.selectedStudent.startDate = new Date($scope.selectedStudent.startDate);
+            $scope.popFormDialog();
+        }
+        else if ($scope.dialogType === 'Delete') {
+            $scope.popDeleteDialog();
+        } else if ($scope.dialogType === 'Restore') {
+            console.log('get student for restore executed!!!'); //testing
+        } else {
+            alert('Unexpected error occurred. Try again.');
+        }
+    };
+
+    $scope.popInfoDialog = function($event) {
+        $mdDialog.show({
+            contentElement: '#infoDialog',
+            parent: angular.element(document.body),
+            targetEvent: $event,
+            clickOutsideToClose: true
         });
     };
 
@@ -139,12 +160,11 @@ app.controller('studentController', function($scope, studentSrv, $http, $mdDialo
         });
     };
 
-    $scope.popInfoDialog = function($event) {
+    $scope.popRestoreDialog = function($event) {
         $mdDialog.show({
-            contentElement: '#infoDialog',
+            contentElement: '#restoreDialog',
             parent: angular.element(document.body),
-            targetEvent: $event,
-            clickOutsideToClose: true
+            targetEvent: $event
         });
     };
 

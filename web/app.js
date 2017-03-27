@@ -31,6 +31,7 @@ app.controller('studentController', function($scope, studentSrv, $http, $mdDialo
     $scope.selectedStudent = {};
     $scope.students = [];
     $scope.manifest = [];
+    $scope.deletedStudents = [];
     $scope.getStudentCalls = [];
     $scope.tableView = true;
     $scope.tileView = false;
@@ -95,6 +96,7 @@ app.controller('studentController', function($scope, studentSrv, $http, $mdDialo
             $scope.editStudentSubmit();
         }
         else if ($scope.formType === 'Delete') {
+            $scope.deletedStudents.push($scope.selectedStudent);
             $scope.deleteStudentSubmit();
         } else {
             alert('Unexpected error occurred. Try again.');

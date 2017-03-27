@@ -241,6 +241,35 @@
         </md-dialog>
     </div>
 </div>
+<!-- mdDialog for restoring student data -->
+<div style="visibility: hidden">
+    <div class="md-dialog-container md-warn" id="restoreDialog">
+        <md-dialog>
+            <form ng-cloak>
+                <md-toolbar md-colors="{background: 'blue-grey-800'}">
+                    <div class="md-toolbar-tools">
+                        <h4>Restore Student?</h4>
+                        <span flex></span>
+                        <md-button class="md-icon-button md-ink-ripple" ng-click="close()">
+                            <md-icon class="material-icons" aria-label="Restore Dialog">clear</md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content>
+                    <div class="md-dialog-content" layout="column" layout-align="start start">
+                        <p>Which student would you like to restore?</p>
+
+                        <br/>
+                        <div layout="row" layout-align="center">
+                            <md-button class="md-raised" ng-click="close()">Cancel</md-button>
+                            <md-button class="md-raised big-red" ng-click="submit()">Delete</md-button>
+                        </div>
+                    </div>
+                </md-dialog-content>
+            </form>
+        </md-dialog>
+    </div>
+</div>
 <!-- mdDialog to be displayed when loading the sorted table -->
 <div style="visibility: hidden">
     <div class="md-dialog-container" id="loadingDialog">

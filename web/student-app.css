@@ -69,13 +69,13 @@ md-fab-speed-dial.md-fab-bottom-right {
 }
 
 #year-cell {
-    width: 60px;
-    min-width: 60px;
+    width: 65px;
+    min-width: 65px;
 }
 
 #name-cell {
-    width: 200px;
-    min-width: 200px;
+    width: 195px;
+    min-width: 195px;
 }
 
 #date-cell {

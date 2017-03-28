@@ -42,6 +42,7 @@ md-fab-speed-dial.md-fab-bottom-right {
 }
 
 #tile-style {
+    min-width: 200px;
     background: #b0bec5;
 }
 

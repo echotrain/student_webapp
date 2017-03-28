@@ -225,6 +225,12 @@
                         </div>
                     </md-list-item>
                     <md-list-item>
+                        <md-icon class="material-icons md-avatar-icon">today</md-icon>
+                        <div class="md-list-item-text" layout="column">
+                            <p>{{selectedStudent.startDate.toLocaleDateString()}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item>
                         <md-icon class="material-icons md-avatar-icon">phone</md-icon>
                         <div class="md-list-item-text" layout="column">
                             <p>{{selectedStudent.phone}}</p>
@@ -249,15 +255,15 @@
             <form ng-cloak>
                 <md-toolbar md-colors="{background: 'blue-grey-800'}">
                     <div class="md-toolbar-tools">
-                        <h4>Restore  Student?</h4>
+                        <h4>Restore  Student</h4>
                         <span flex></span>
                         <md-button class="md-icon-button md-ink-ripple" ng-click="close()">
                             <md-icon class="material-icons" aria-label="Close Dialog">clear</md-icon>
                         </md-button>
                     </div>
                 </md-toolbar>
-                <md-dialog-content>
-                    <div class="md-dialog-content" layout="column" layout-align="start start">
+                <md-dialog-content ng-if="deletedStudents.length > 0">
+                    <div class="md-dialog-content" layout="column" layout-align="center center">
                         <p>Which student would you like to restore?</p>
                         <md-select aria-label="Restore" ng-model="student">
                             <md-option ng-repeat="student in deletedStudents" ng-click="getStudent(student.id)"
@@ -269,6 +275,15 @@
                         <div layout="row" layout-align="center">
                             <md-button class="md-raised" ng-click="close()">Cancel</md-button>
                             <md-button class="md-raised big-red" ng-click="submit()">Restore</md-button>
+                        </div>
+                    </div>
+                </md-dialog-content>
+                <md-dialog-content ng-if="deletedStudents.length < 1">
+                    <div class="md-dialog-content" layout="column" layout-align="center center">
+                        <p>No Students to Restore!</p>
+                        <br/>
+                        <div layout="row" layout-align="center">
+                            <md-button class="md-raised big-red" ng-click="close()">Ok</md-button>
                         </div>
                     </div>
                 </md-dialog-content>

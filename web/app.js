@@ -40,17 +40,18 @@ app.controller('studentController', function($scope, studentSrv, $http, $mdDialo
     $scope.reverse = true;
     const LOAD_TIME = 1000;
 
-    //AJAX json
+    //AJAX json of student data
     function init() {
         studentSrv.getStudents().then(function (result) {
             for (let stu in result.data) {
                 $scope.manifest.push(result.data[stu]);
                 $scope.getStudentCalls.push($http.get(`/api/v1/students/${result.data[stu]}.json`)
-                    .then(function (result) {
-                            result.data.id = $scope.manifest[stu];
-                            $scope.students.push(result.data);
-                        }
-                    ));
+                    .then(function(result) {
+                        result.data.id = $scope.manifest[stu];
+                        result.data.startDate = new Date(result.data.startDate);
+                        $scope.students.push(result.data);
+                    }
+                ));
             }
         });
         $scope.checkCookies();
@@ -88,6 +89,21 @@ app.controller('studentController', function($scope, studentSrv, $http, $mdDialo
         $scope.dialogType = type;
     };
 
+    $scope.getStudent = function(_id) {
+        $scope.selectedStudent = $scope.students.find(function(student) {
+            return student.id === _id;
+        });
+        if ($scope.dialogType === 'Info') {
+            $scope.popInfoDialog();
+        }
+        else if ($scope.dialogType === 'Edit') {
+            $scope.popFormDialog();
+        }
+        else if ($scope.dialogType === 'Delete') {
+            $scope.popDeleteDialog();
+        }
+    };
+
     $scope.submit = function() {
         if ($scope.dialogType === 'Add') {
             $scope.addStudentSubmit();
@@ -100,38 +116,13 @@ app.controller('studentController', function($scope, studentSrv, $http, $mdDialo
             $scope.deleteStudentSubmit();
         }
         else if ($scope.dialogType === 'Restore') {
-            console.log('all deleted students available for restore:'); //testing
-            console.log($scope.deletedStudents); //testing
-            console.log('selected student to be restored:'); // testing
-            console.log($scope.selectedStudent); //testing
-            $scope.deletedStudents = $filter('filter')($scope.deletedStudents, !$scope.selectedStudent);
-            console.log('deleted students post restore:'); //testing
-            console.log($scope.deletedStudents); //testing
+            $scope.deletedStudents = $filter('filter')($scope.deletedStudents, function(stu) {
+                return stu.id !== $scope.selectedStudent.id;
+            });
             $scope.addStudentSubmit();
-        }
-        else {
-            alert('Unexpected error occurred. Try again.');
-            $scope.close();
-        }
-    };
-
-    $scope.getStudent = function(_id) {
-        $scope.selectedStudent = $scope.students.find(function(student) {
-            return student.id === _id;
-        });
-        if ($scope.dialogType === 'Info') {
-            $scope.popInfoDialog();
-        }
-        else if ($scope.dialogType === 'Edit') {
-            $scope.selectedStudent.startDate = new Date($scope.selectedStudent.startDate);
-            $scope.popFormDialog();
-        }
-        else if ($scope.dialogType === 'Delete') {
-            $scope.popDeleteDialog();
-        } else if ($scope.dialogType === 'Restore') {
-            console.log('get student for restore executed!!!'); //testing
         } else {
             alert('Unexpected error occurred. Try again.');
+            $scope.close();
         }
     };
 

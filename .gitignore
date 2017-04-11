@@ -1,2 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 node_modules/
+.idea/markdown-navigator.xml
+.idea/markdown-navigator/
+.idea/workspace.xml

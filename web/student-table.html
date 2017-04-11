@@ -1,0 +1,24 @@
+<div layout="row" layout-align="start center" class="md-list-item-text">
+    <div class="md-list-item-inner" ng-click="setDialogType('Info'); getStudent(student.id)">
+        <span id="year-cell" layout="column" layout-align="none" layout-padding>{{student.year | getSchoolYear}}</span>
+        <b id="name-cell" layout="column" layout-align="none" layout-padding>{{student.lname}}, {{student.fname}}</b>
+        <span id="date-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.startDate.toLocaleDateString()}}</span>
+        <span id="street-cell" layout="column" layout-align="none" hide show-gt-md flex layout-padding>{{student.street}}</span>
+        <span id="city-cell" layout="column" layout-align="none" hide show-gt-xs flex layout-padding>{{student.city}}</span>
+        <span id="state-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.state}}</span>
+        <span id="zip-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.zip}}</span>
+        <span id="phone-cell" layout="column" layout-align="none" hide show-gt-sm flex layout-padding>{{student.phone}}</span>
+    </div>
+    <div class="md-secondary-container">
+        <md-button class="md-secondary md-icon-button md-ink-ripple" aria-label="Edit Student"
+                   ng-click="setDialogType('Edit'); getStudent(student.id)">
+            <md-tooltip md-direction="top">Edit</md-tooltip>
+            <md-icon class="md-secondary material-icons">edit</md-icon>
+        </md-button>
+        <md-button class="md-secondary md-icon-button md-ink-ripple" aria-label="Delete Student"
+                   ng-click="setDialogType('Delete'); getStudent(student.id)">
+            <md-tooltip md-direction="top">Delete</md-tooltip>
+            <md-icon class="md-secondary material-icons">delete_forever</md-icon>
+        </md-button>
+    </div>
+</div>

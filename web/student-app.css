@@ -1,0 +1,120 @@
+/*custom css for student data*/
+
+body {
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: #818181;
+}
+
+.logo {
+    font-size: 150px;
+    color: #1abc9c;
+}
+
+.big-red {
+    background-color: #ff5252 !important;
+    color: #fff !important;
+}
+
+.layout-content {
+    padding: 10px;
+}
+
+.md-fab:hover > md-icon {
+    color: #fff !important;
+}
+
+.switch-show-hide.ng-hide {
+    opacity: 0;
+}
+
+.switch-show-hide.ng-hide-add,
+.switch-show-hide.ng-hide-remove {
+    transition: all linear 0.5s;
+}
+
+.md-fab:hover, .md-fab.md-focused {
+    background-color: #666666 !important;
+}
+
+md-fab-speed-dial.md-fab-bottom-right {
+    position: fixed !important;
+}
+
+#tile-style {
+    min-width: 200px;
+    background: #b0bec5;
+}
+
+/* ------- table style and cell padding ------- */
+.table-header {
+    cursor: pointer;
+    padding: 0px !important;
+}
+
+.sort {
+    padding: 0px !important;
+}
+
+.sort:after {
+    content: 'arrow_drop_up';
+}
+
+.sort.reverse:after {
+    content: 'arrow_drop_down';
+}
+
+.student-row:hover {
+    cursor: pointer;
+    background-color: rgba(158,158,158,0.2);
+}
+
+#year-cell {
+    width: 65px;
+    min-width: 65px;
+}
+
+#name-cell {
+    width: 195px;
+    min-width: 195px;
+}
+
+#date-cell {
+    width: 125px;
+    min-width: 125px;
+}
+
+#street-cell {
+    width: 300px;
+    min-width: 300px;
+}
+
+#city-cell {
+    width: 150px;
+    min-width: 150px;
+}
+
+#state-cell {
+    width: 70px;
+    min-width: 70px;
+}
+
+#zip-cell {
+    width: 80px;
+    min-width: 80px;
+}
+
+#phone-cell {
+    width: 90px;
+    min-width: 90px;
+}
+
+.edit-cell {
+    width: 60px;
+    min-width: 60px;
+}
+
+.delete-cell {
+    width: 60px;
+    min-width: 60px;
+}

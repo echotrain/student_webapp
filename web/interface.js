@@ -1,6 +1,8 @@
 // JavaScript Files
 /* global $ Cookies */
 
+//TODO: learn everything about angular, conversion starts now...
+
 let students = [];
 let images;
 let deletedStudents = [];
@@ -168,7 +170,7 @@ $(document).ready(function() {
     function deleteStudentModal(element) {
         $(element).click(function() {
             let selectedStudent = students[$(this).parent().attr('id')];
-            let imgIndex = `${selectedStudent.lname}-${selectedStudent.fname}`;
+            let imgIndex = `${selectedStudent.id}`;
             
             $('#deleteButtonDiv').html('<button id="confirmDeleteButton" type="button" class="btn btn-danger" data-dismiss="modal">DELETE</button>');
             
@@ -208,7 +210,7 @@ $(document).ready(function() {
         
         $(element).click(function() {
             let index = $(this).parent().attr('id');
-            let imgIndex = `${students[index].lname}-${students[index].fname}`;
+            let imgIndex = `${students[index].id}`;
             
             $('#modalData').empty().append(
                 `<div class="modal-content text-center">
@@ -241,7 +243,7 @@ $(document).ready(function() {
         $('#tableData').empty();
         $('#tileData').empty();
         $(students).each(function(index, student) {
-            let imgIndex = `${student.lname}-${student.fname}`;
+            let imgIndex = `${student.id}`
             $('#tableData').append(`<tr id="${index}">
                                     <td class="clickRow"> ${getSchoolYear(student.year)} </td>
                                     <td class="clickRow"> ${student.lname}, ${student.fname} </td>

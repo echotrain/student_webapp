@@ -1,8 +1,9 @@
 //NODE.js script
-console.log('Loading Server');
+let colors = require('colors');
+console.log('Loading Server'.green);
 const WEB = __dirname + '/web';
 const SERV = __dirname + '/server';
-console.log(`WEB is ${WEB}`);
+console.log(`WEB is ${WEB}`.green);
 
 //load main modules
 let express = require('express');
@@ -27,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //file list data
-console.log("Checking File System");
+console.log("Checking File System".green);
 let fileList = fs.readdirSync(__dirname + '/students').map(fileName => fileName.replace('.json', ''));
 
 

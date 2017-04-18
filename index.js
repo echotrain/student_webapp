@@ -132,9 +132,9 @@ let server = app.listen(port, process.env.IP);
 
 //shutdown handling
 function gracefullShutdown() {
-    console.log('\nStarting Shutdown');
+    console.log('\nStarting Shutdown'.red);
     server.close(function() {
-        console.log('\nShutdown Complete');
+        console.log('\nShutdown Complete'.green);
     });
 }
 
@@ -145,7 +145,7 @@ process.on('SIGINT', gracefullShutdown); //Ctrl+C (interrupt)
 //SIGKILL (kill -9) can't be caught by any process, including node
 //SIGSTP/SIGCONT (stop/continue) can't be caught by node
 
-// console.log(`Listening on port ${port}`); //TODO define the port
+console.log(`Listening on port ${port}`.cyan);
 
 //server running check... better go catch it. ha.
-console.log("server running");
+console.log("server running".green);

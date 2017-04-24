@@ -1,9 +1,16 @@
 //NODE.js script
+let winston = require('winston');
 let colors = require('colors');
-console.log('Loading Server'.green);
-const WEB = __dirname + '/web';
-const SERV = __dirname + '/server';
-console.log(`WEB is ${WEB}`.green);
+colors.enabled = true;
+let nconf = require('nconf');
+nconf.argv()
+    .env()
+    .file({file:'config.json'});
+const WEB = nconf.get('WEB');
+const PORT = nconf.get('PORT');
+const IP = nconf.get('IP');
+
+winston.info(`WEB is ${__dirname + WEB}`.green);
 
 //load main modules
 let express = require('express');
@@ -15,6 +22,7 @@ let compression = require('compression');
 let favicon = require('serve-favicon');
 let bodyParser = require('body-parser');
 
+winston.info('Loading Server...'.green);
 
 //create express app
 let app = express();
@@ -28,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //file list data
-console.log("Checking File System".green);
+winston.info("Checking File System\n".green);
 let fileList = fs.readdirSync(__dirname + '/students').map(fileName => fileName.replace('.json', ''));
 
 
@@ -127,25 +135,24 @@ app.get('*', function(req, res) {
 
 
 //start server
-let port = 3000;
-let server = app.listen(port, process.env.IP);
+let server = app.listen(PORT, IP);
 
 //shutdown handling
 function gracefullShutdown() {
-    console.log('\nStarting Shutdown'.red);
+    winston.info('\nStarting Shutdown'.red);
     server.close(function() {
-        console.log('\nShutdown Complete'.green);
+        winston.info('\nShutdown Complete'.green);
     });
 }
 
-process.on('SIGTERM', gracefullShutdown); //kill (treminate)
+process.on('SIGTERM', gracefullShutdown); //kill (terminate)
 
 process.on('SIGINT', gracefullShutdown); //Ctrl+C (interrupt)
 
 //SIGKILL (kill -9) can't be caught by any process, including node
 //SIGSTP/SIGCONT (stop/continue) can't be caught by node
 
-console.log(`Listening on port ${port}`.cyan);
+winston.info(`Listening on port ${PORT}`.cyan);
 
 //server running check... better go catch it. ha.
-console.log("server running".green);
+winston.info("server running...\n".green);

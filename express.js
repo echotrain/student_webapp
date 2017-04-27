@@ -1,3 +1,4 @@
+let path = require('path');
 let winston = require('winston');
 let colors = require('colors');
 colors.enabled = true;
@@ -34,10 +35,7 @@ app.use(compression());
 app.use(favicon(WEB + '/img/favicon.png'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
-//file list data
-winston.info("Checking File System\n".green);
+app.use(rest);
 
 //traditional webserver stuff for serving static files
 app.use(express.static(WEB));

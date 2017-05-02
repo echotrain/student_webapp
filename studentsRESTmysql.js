@@ -1,7 +1,7 @@
 let express = require('express');
 let fs = require('fs');
 let bodyParser = require('body-parser');
-let Client = require('./studentMySQLDoa');
+let Client = require('./studentMySQLDao');
 let mysql = new Client();
 let winston = require('winston');
 let colors = require('colors');

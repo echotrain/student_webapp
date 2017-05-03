@@ -1,5 +1,5 @@
 {
-  "WEB": "./web",
+  "WEB": "/web",
   "PORT": "3000",
   "IP": "127.0.0.1",
   "mongo-url": "mongodb://127.0.0.1:27017/studentList",

@@ -10,7 +10,7 @@ const WEB = nconf.get('WEB');
 const PORT = nconf.get('PORT');
 const IP = nconf.get('IP');
 
-winston.info(`WEB is ${__dirname + WEB}`.green);
+winston.info(`WEB is ${WEB}`.green);
 
 //load main modules
 let express = require('express');
@@ -103,7 +103,7 @@ app.delete('/api/v1/students/:id.json', function(req, res) {
     let idIndex = fileList.indexOf(id);
     
     if (idIndex === -1) {
-        res.status(404).sendFile(WEB + '/404.html');
+        res.status(404).sendFile(`${WEB}/404.html`, {'root': __dirname});
     }
     else {
         fileList.splice(idIndex, 1);
@@ -126,11 +126,11 @@ app.get('/api/v1/students.json', function(req, res) {
 app.use(express.static(WEB));
 
 app.get('img/images.json', function(req, res) { //get student images
-    res.status(200).sendFile(`${WEB}/img/images.json`);
+    res.status(200).sendFile(`${WEB}/img/images.json`, {'root': __dirname});
 });
 
 app.get('*', function(req, res) {
-    res.status(404).sendFile(WEB + '/404.html');
+    res.status(404).sendFile(`${WEB}/404.html`, {'root': __dirname});
 });
 
 

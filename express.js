@@ -6,11 +6,11 @@ let nconf = require('nconf');
 nconf.argv()
     .env()
     .file({file:'config.json'});
-const WEB = __dirname + nconf.get('WEB');
+const WEB = nconf.get('WEB');
 const PORT = nconf.get('PORT');
 const IP = nconf.get('IP');
 
-//winston.info(`WEB is ${__dirname + WEB}`.green);
+winston.info(`WEB is ${WEB}`.green);
 
 //load main modules
 let express = require('express');

@@ -1,10 +1,10 @@
 {
-  "WEB": "/web",
+  "WEB": "./web",
   "PORT": "3000",
   "IP": "127.0.0.1",
-  "mongo-url": "mongodb://127.0.0.1:27017/studentList",
-  "mysql-url": "mysql://root@127.0.0.1:3306/studentList",
-  "host": "127.0.0.7",
+  "mongo-url": "mongodb://localhost:27017/students",
+  "mysql-url": "mysql://root@127.0.0.1:3306/students",
+  "host": "localhost",
   "user": "root",
   "pass": ""
 }
